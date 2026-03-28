@@ -163,7 +163,7 @@ export function AppLayout() {
         onNotificationClick={() => {}}
       />
       <Box sx={{ display: 'flex', flex: 1, minHeight: 0 }}>
-        <Navigation items={navSections} staticSidebar />
+        <Navigation items={navSections} />
         <Box
           sx={{
             flex: 1,
