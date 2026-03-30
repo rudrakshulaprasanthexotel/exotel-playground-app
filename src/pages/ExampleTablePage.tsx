@@ -1,12 +1,20 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { GridRenderCellParams, GridSortModel } from '@mui/x-data-grid-pro'
+import MenuItem from '@mui/material/MenuItem'
 import {
+  Avatar,
   Box,
   DataGrid,
+  Divider,
+  getInitials,
   Icon,
   IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
   Paper,
   Stack,
+  stringToColor,
   Typography,
   type GridColDef,
   type ToolbarFilterConfig,
@@ -82,6 +90,23 @@ export function ExampleTablePage() {
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 5 })
   const [sortModel, setSortModel] = useState<GridSortModel>([])
   const [filterRecords, setFilterRecords] = useState<FilterRecords>(() => ({ ...INITIAL_TOOLBAR_FILTERS }))
+  const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
+  const [menuRowId, setMenuRowId] = useState<string | number | null>(null)
+
+  const handleMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>, rowId: string | number) => {
+    setMenuAnchorEl(event.currentTarget)
+    setMenuRowId(rowId)
+  }, [])
+
+  const handleMenuClose = useCallback(() => {
+    setMenuAnchorEl(null)
+    setMenuRowId(null)
+  }, [])
+
+  const handleMenuAction = useCallback((action: string) => {
+    console.log(`Action "${action}" on row: ${String(menuRowId)}`)
+    handleMenuClose()
+  }, [menuRowId, handleMenuClose])
 
   const loadPage = useCallback(
     async (page: number, pageSize: number, sort: GridSortModel, filters: FilterRecords) => {
@@ -112,6 +137,15 @@ export function ExampleTablePage() {
 
   const toolbarFilters = useMemo(() => buildToolbarFilters(), [])
 
+  const renderUserNameCell = useCallback((params: GridRenderCellParams) => (
+    <Stack height='100%' alignItems="center" direction="row" spacing={1}>
+      <Avatar sx={{ backgroundColor: stringToColor(params.value), width: 24, height: 24, fontSize: 12 }}>{getInitials(params.value)}</Avatar>
+      <Typography variant="body2">
+        {params.value}
+      </Typography>
+    </Stack>
+  ), [])
+
   const columns: GridColDef[] = useMemo(
     () => [
       {
@@ -120,6 +154,7 @@ export function ExampleTablePage() {
         flex: 1,
         minWidth: 200,
         sortable: true,
+        renderCell: renderUserNameCell,
       },
       {
         field: 'email',
@@ -153,7 +188,7 @@ export function ExampleTablePage() {
             aria-label="More actions"
             onClick={(e) => {
               e.stopPropagation()
-              window.alert(`Row actions (id: ${String(params.id)})`)
+              handleMenuOpen(e, params.id)
             }}
           >
             <Icon name="dots-three-vertical" size="sm" />
@@ -170,7 +205,7 @@ export function ExampleTablePage() {
       sx={{
         borderRadius: 1,
         p: 2,
-        minHeight: '100%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -211,7 +246,38 @@ export function ExampleTablePage() {
             onRefresh={() =>
               void loadPage(paginationModel.page, paginationModel.pageSize, sortModel, filterRecords)
             }
+            initialState={{pinnedColumns: {right: ['actions']}}}
           />
+          <Menu
+            anchorEl={menuAnchorEl}
+            open={Boolean(menuAnchorEl)}
+            onClose={handleMenuClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            slotProps={{ paper: { sx: { minWidth: 180 } } }}
+          >
+            <MenuItem onClick={() => handleMenuAction('edit')}>
+              <ListItemIcon><Icon name="pencil-simple-line" size="sm" /></ListItemIcon>
+              <ListItemText>Edit</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => handleMenuAction('download')}>
+              <ListItemIcon><Icon name="download-simple" size="sm" /></ListItemIcon>
+              <ListItemText>Download</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => handleMenuAction('duplicate')}>
+              <ListItemIcon><Icon name="copy-simple" size="sm" /></ListItemIcon>
+              <ListItemText>Duplicate</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => handleMenuAction('view-activity')}>
+              <ListItemIcon><Icon name="clock-counter-clockwise" size="sm" /></ListItemIcon>
+              <ListItemText>View Activity</ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={() => handleMenuAction('delete')} sx={{ color: 'error.main' }}>
+              <ListItemIcon sx={{ color: 'inherit' }}><Icon name="trash-simple" size="sm" /></ListItemIcon>
+              <ListItemText color="error.main">Delete</ListItemText>
+            </MenuItem>
+          </Menu>
         </Box>
       </Stack>
     </Paper>

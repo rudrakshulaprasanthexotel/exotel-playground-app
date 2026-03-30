@@ -1,1 +1,1 @@
-export const BRAND_LOGO = 'https://ik.imagekit.io/kx5hycpnh/LogoExpanded.svg?updatedAt=1763974367162';
+export const BRAND_LOGO = '/src/assets/exotel-playground-logo.png';

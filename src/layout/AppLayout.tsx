@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import type { NavigateFunction } from 'react-router-dom'
 import {
@@ -6,10 +6,11 @@ import {
   AppBar as ExoAppBar,
   Icon,
   Navigation,
+  useThemeMode,
   type NavSectionProps,
 } from '@exotel-npm-dev/signal-design-system'
-import type { ThemeMode } from '@exotel-npm-dev/signal-design-system'
-import { BRAND_LOGO } from '../constants/app'
+// import { BRAND_LOGO } from '../constants/app'
+import brandLogo from '../assets/exotel-playground-logo.png'
 
 function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
   const go = (path: string) => () => navigate(path)
@@ -101,7 +102,7 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
 
 export function AppLayout() {
   const navigate = useNavigate()
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+  const { mode, setMode } = useThemeMode()
 
   const navSections = useMemo(() => buildNavSections(navigate), [navigate])
 
@@ -135,7 +136,8 @@ export function AppLayout() {
             },
           ],
         }}
-        brandLogo={BRAND_LOGO}
+        brandLogo={<img src={brandLogo} alt="Exotel Playground Logo" style={{ width: 'unset', height: 'unset' }} />}
+        brandLogoStyle={{ width: 'unset', height: 'unset' }}
         avatarMenuProps={{
           avatarName: 'OP User',
           menuGroups: [
@@ -156,8 +158,8 @@ export function AppLayout() {
             }
           ],
           footerInfo: [{ label: 'Version', value: '1.0.0' }],
-          selectedTheme: themeMode,
-          onThemeChange: setThemeMode,
+          selectedTheme: mode || 'system',
+          onThemeChange: setMode,
           onLogout: () => {},
         }}
         onNotificationClick={() => {}}

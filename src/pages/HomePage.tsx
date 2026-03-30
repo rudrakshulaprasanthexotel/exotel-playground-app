@@ -100,7 +100,7 @@ export function HomePage() {
       }}
     >
       <Stack spacing={1.5} sx={{ maxWidth: 770 }}>
-        <Typography component="h6" variant="h6" sx={{ fontWeight: 700 }}>
+        <Typography component="h5" variant="h5">
           👋 Welcome to Design Playground
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
