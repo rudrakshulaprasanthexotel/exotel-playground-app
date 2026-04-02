@@ -208,6 +208,7 @@ export function ExampleTablePage() {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
+        bgcolor: 'surface.elevation1',
       }}
     >
       <Stack spacing={1.5} sx={{ flex: 1, height: '100%' }}>
@@ -218,7 +219,10 @@ export function ExampleTablePage() {
         )}
         <Box sx={{ flex: 1, height: '100%', minHeight: 480 }}>
           <DataGrid
-            title="Example - Table Page"
+            tableHeader={{
+              title: 'Example - Table Page',
+              subtitle: 'Interactive table from Signal Design System',
+            }}
             rows={rows}
             columns={columns}
             loading={loading}

@@ -97,6 +97,7 @@ export function HomePage() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        bgcolor: 'surface.elevation1',
       }}
     >
       <Stack spacing={1.5} sx={{ maxWidth: 770 }}>

@@ -37,6 +37,14 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
           onClick: go('/example-table'),
         },
         {
+          id: 'date-time',
+          iconName: 'calendar-blank',
+          label: 'Example - Date & Time',
+          path: '/date-time',
+          openNewPage: false,
+          onClick: go('/date-time'),
+        },
+        {
           id: 'example-settings',
           iconName: 'gear',
           label: 'Example - Settings',
@@ -172,7 +180,7 @@ export function AppLayout() {
         <Box
           sx={{
             flex: 1,
-            bgcolor: 'grey.50',
+            bgcolor: 'surface.elevation0',
             p: 1,
             overflow: 'auto',
           }}
