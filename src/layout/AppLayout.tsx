@@ -6,11 +6,13 @@ import {
   AppBar as ExoAppBar,
   Icon,
   Navigation,
+  useLoadDataByTheme,
   useThemeMode,
   type NavSectionProps,
 } from '@exotel-npm-dev/signal-design-system'
 // import { BRAND_LOGO } from '../constants/app'
-import brandLogo from '../assets/exotel-playground-logo.png'
+import brandLogoLight from '../assets/exotel-playground-logo-light.svg'
+import brandLogoDark from '../assets/exotel-playground-logo-dark.svg'
 
 function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
   const go = (path: string) => () => navigate(path)
@@ -20,7 +22,7 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
       items: [
         {
           id: 'home',
-          icon: <Icon name="house" size="sm" color="grey" />,
+          iconName: 'house',
           label: 'Home',
           path: '/',
           openNewPage: false,
@@ -28,7 +30,7 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
         },
         {
           id: 'example-table',
-          icon: <Icon name="columns" size="sm" color="grey" />,
+          iconName: 'columns',
           label: 'Example - Table Page',
           path: '/example-table',
           openNewPage: false,
@@ -36,7 +38,7 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
         },
         {
           id: 'example-settings',
-          icon: <Icon name="gear" size="sm" color="grey" />,
+          iconName: 'gear',
           label: 'Example - Settings',
           path: '/example-settings',
           openNewPage: false,
@@ -44,7 +46,7 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
         },
         {
           id: 'example-node',
-          icon: <Icon name="layout" size="sm" color="grey" />,
+          iconName: 'layout',
           label: 'Example - Node Flow',
           path: '/example-node',
           openNewPage: false,
@@ -52,13 +54,13 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
         },
         {
           id: 'example-4',
-          icon: <Icon name="chart-bar" size="sm" color="grey" />,
+          iconName: 'chart-bar',
           label: 'Example 4',
           openNewPage: false,
           children: [
             {
               id: 'example-4-child-1',
-              icon: <Icon name="circle" size="sm" color="grey" />,
+              iconName: 'circle',
               label: 'Child 1',
               path: '/example-4/child-1',
               openNewPage: false,
@@ -66,7 +68,7 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
             },
             {
               id: 'example-4-child-2',
-              icon: <Icon name="circle" size="sm" color="grey" />,
+              iconName: 'circle',
               label: 'Child 2',
               path: '/example-4/child-2',
               openNewPage: false,
@@ -81,7 +83,7 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
       items: [
         {
           id: 'app-1',
-          icon: <Icon name="squares-four" size="sm" color="grey" />,
+          iconName: 'squares-four',
           label: 'App 1',
           path: '/app-1',
           openNewPage: true,
@@ -89,7 +91,7 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
         },
         {
           id: 'app-2',
-          icon: <Icon name="squares-four" size="sm" color="grey" />,
+          iconName: 'squares-four',
           label: 'App 2',
           path: '/app-2',
           openNewPage: true,
@@ -103,11 +105,12 @@ function buildNavSections(navigate: NavigateFunction): NavSectionProps[] {
 export function AppLayout() {
   const navigate = useNavigate()
   const { mode, setMode } = useThemeMode()
+  const brandLogo = useLoadDataByTheme(brandLogoDark, brandLogoLight);
 
   const navSections = useMemo(() => buildNavSections(navigate), [navigate])
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', bgcolor: 'grey.50' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <ExoAppBar
         appLauncherProps={{
           type: 'default',
