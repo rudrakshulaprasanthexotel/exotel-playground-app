@@ -113,6 +113,9 @@ export function ExampleSettingsPage() {
           sx={{
             borderBottom: 1,
             borderColor: 'divider',
+            // Inherit Paper surface — avoid sx `bgcolor: 'background.paper'` here, which can
+            // resolve to the light palette under CSS-variables theming while MuiPaper uses
+            // the active scheme (shows as a white tab strip in dark mode).
             position: 'sticky',
             zIndex: 1,
           }}
@@ -122,7 +125,13 @@ export function ExampleSettingsPage() {
             onChange={(_, v) => setChannelTab(v as number)}
             variant="scrollable"
             scrollButtons="auto"
-            sx={{ mb: '-1px' }}
+            sx={{
+              mb: '-1px',
+              bgcolor: 'transparent',
+              '& .MuiTabs-scroller': { bgcolor: 'transparent' },
+              '& .MuiTabs-list, & .MuiTabs-flexContainer': { bgcolor: 'transparent' },
+              '& .MuiTabScrollButton-root': { bgcolor: 'transparent' },
+            }}
           >
             <Tab icon={<Icon name="phone" size="sm" />} iconPosition="start" label="Call" />
             <Tab
@@ -247,11 +256,10 @@ export function ExampleSettingsPage() {
                         overflow: 'hidden',
                       }}
                     >
-                      <Box
-                        component="img"
+                      <img
                         src={BANNER_IMAGE_SECONDARY}
                         alt=""
-                        sx={{
+                        style={{
                           position: 'absolute',
                           height: '534%',
                           width: '100%',
@@ -273,11 +281,10 @@ export function ExampleSettingsPage() {
                         overflow: 'hidden',
                       }}
                     >
-                      <Box
-                        component="img"
+                      <img
                         src={BANNER_IMAGE_PRIMARY}
                         alt=""
-                        sx={{
+                        style={{
                           position: 'absolute',
                           height: '100%',
                           width: '216%',
