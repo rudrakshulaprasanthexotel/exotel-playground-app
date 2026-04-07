@@ -10,6 +10,7 @@ import {
   useThemeMode,
   type NavSectionProps,
 } from '@exotel-npm-dev/signal-design-system'
+import { clearPlaygroundSession } from '../auth/playgroundSession'
 // import { BRAND_LOGO } from '../constants/app'
 import brandLogoLight from '../assets/exotel-playground-logo-light.svg'
 import brandLogoDark from '../assets/exotel-playground-logo-dark.svg'
@@ -171,7 +172,10 @@ export function AppLayout() {
           footerInfo: [{ label: 'Version', value: '1.0.0' }],
           selectedTheme: mode || 'system',
           onThemeChange: setMode,
-          onLogout: () => {},
+          onLogout: () => {
+            clearPlaygroundSession()
+            navigate('/sign-in', { replace: true })
+          },
         }}
         onNotificationClick={() => {}}
       />
