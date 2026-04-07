@@ -256,11 +256,10 @@ export function ExampleSettingsPage() {
                         overflow: 'hidden',
                       }}
                     >
-                      <Box
-                        component="img"
+                      <img
                         src={BANNER_IMAGE_SECONDARY}
                         alt=""
-                        sx={{
+                        style={{
                           position: 'absolute',
                           height: '534%',
                           width: '100%',
@@ -282,11 +281,10 @@ export function ExampleSettingsPage() {
                         overflow: 'hidden',
                       }}
                     >
-                      <Box
-                        component="img"
+                      <img
                         src={BANNER_IMAGE_PRIMARY}
                         alt=""
-                        sx={{
+                        style={{
                           position: 'absolute',
                           height: '100%',
                           width: '216%',
