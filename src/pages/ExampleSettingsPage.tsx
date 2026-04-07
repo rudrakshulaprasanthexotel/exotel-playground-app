@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import Box from '@mui/material/Box'
 import {
   Autocomplete,
-  Button,
+  Box,
   Checkbox,
   Chip,
   Divider,
@@ -14,6 +13,7 @@ import {
   Icon,
   IconButton,
   Link,
+  PageHeader,
   Paper,
   Radio,
   RadioGroup,
@@ -93,53 +93,27 @@ export function ExampleSettingsPage() {
         minHeight: '100%',
         display: 'flex',
         flexDirection: 'column',
+        padding: 1,
         overflow: 'hidden',
-        bgcolor: 'background.paper',
+        bgcolor: 'surface.elevation1',
       }}
     >
-      <Box
-        sx={{
-          borderBottom: 1,
-          borderColor: 'divider',
-          px: '12px',
-          py: '12px',
-        }}
-      >
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          spacing={2}
-          sx={{ alignItems: { xs: 'stretch', sm: 'flex-start' }, justifyContent: 'space-between' }}
-        >
-          <Box>
-            <Typography
-              color="text.primary"
-              sx={{ fontWeight: 600, fontSize: 16, lineHeight: 1.75, letterSpacing: '0.15px' }}
-            >
-              Channel Configuration
-            </Typography>
-            <Typography variant="body2" color="text.primary" sx={{ mt: 0.5 }}>
-              Select communication channel and configure channel settings
-            </Typography>
-          </Box>
-          <Stack direction="row" spacing={1.5} sx={{ flexShrink: 0 }}>
-            <Button variant="outlined" color="error">
-              Discard
-            </Button>
-            <Button variant="contained" color="primary">
-              Save
-            </Button>
-          </Stack>
-        </Stack>
-      </Box>
+        <PageHeader
+          title="Channel Configuration"
+          subtitle="Select communication channel and configure channel settings"
+          actions={[
+            { id: 'discard', variant: 'outlined', color: 'error', children: 'Discard' },
+            { id: 'save', variant: 'contained', color: 'primary', children: 'Save' },
+          ]}
+        />
+        <Divider />
 
       <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
         <Box
           sx={{
             borderBottom: 1,
             borderColor: 'divider',
-            bgcolor: 'background.paper',
             position: 'sticky',
-            top: 0,
             zIndex: 1,
           }}
         >
@@ -166,8 +140,8 @@ export function ExampleSettingsPage() {
           </Tabs>
         </Box>
 
-        <Box sx={{ px: '8px', flex: 1, overflow: 'auto' }}>
-          <Stack sx={{ gap: '42px', p: '8px' }}>
+        <Box sx={{ flex: 1, p: 1, overflow: 'auto' }}>
+          <Stack sx={{ gap: '42px', mt: 1}}>
             {bannerOpen ? (
               <Stack direction="row" sx={{ alignItems: 'stretch', borderRadius: 1.5, overflow: 'hidden' }}>
                 <Box
@@ -322,8 +296,10 @@ export function ExampleSettingsPage() {
                     bgcolor: (t) =>
                       t.palette.mode === 'light' ? 'rgba(46, 125, 50, 0.08)' : 'rgba(46, 125, 50, 0.12)',
                     pt: 1,
+                    pr: 1,
                     display: 'flex',
                     justifyContent: 'center',
+                    alignItems: 'flex-start'
                   }}
                 >
                   <IconButton size="small" aria-label="Dismiss banner" onClick={() => setBannerOpen(false)}>
@@ -439,7 +415,7 @@ export function ExampleSettingsPage() {
                     return (
                       <>
                         {shown.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={option.value} label="Chip" size="small" />
+                          <Chip {...getTagProps({ index })} key={option.value} label={option.label} size="small" />
                         ))}
                         {extra > 0 ? (
                           <Typography
@@ -468,7 +444,6 @@ export function ExampleSettingsPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-                    gap: 1,
                   }}
                 >
                   <FormLabel sx={{ mb: 0, typography: 'body2', color: 'text.primary', letterSpacing: '0.17px' }}>
